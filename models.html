@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Katalog 18 Model Kemasan Kotakio (Full REA Models)</title>
+  <link rel="stylesheet" href="/assets/index-CMxk3kTM.css" />
+  <style>
+    :root {
+      --color-paper: #f3f3f1;
+      --color-ink: #191919;
+    }
+    body {
+      background-color: var(--color-paper);
+      color: var(--color-ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="p-6 md:p-12 max-w-7xl mx-auto">
+  <!-- Header -->
+  <header class="flex flex-col md:flex-row justify-between items-start md:items-center pb-8 border-b border-gray-300 gap-4">
+    <div>
+      <div class="flex items-center gap-3">
+        <h1 class="text-3xl font-extrabold tracking-tight">Katalog Lengkap 18 Model Kemasan</h1>
+        <span class="badge bg-black text-white">Full REA Spec</span>
+      </div>
+      <p class="text-gray-600 mt-1">Daftar lengkap 18 template kemasan FEFCO / ECMA dengan preset ukuran, rumus CAD 2D, dan kinematika lipatan 3D.</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <a href="/studio" class="px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition">Buka Studio 3D &rarr;</a>
+      <a href="/kamus" class="px-4 py-2 bg-white border border-gray-300 rounded-lg font-medium hover:bg-gray-100 transition">Kamus &amp; Istilah</a>
+      <a href="/admin" class="px-4 py-2 bg-white border border-gray-300 rounded-lg font-medium hover:bg-gray-100 transition">Dashboard Admin</a>
+    </div>
+  </header>
+
+  <!-- Filter & Category Tabs -->
+  <div class="my-6 flex flex-col md:flex-row gap-4 items-center justify-between">
+    <div class="flex flex-wrap gap-2" id="categoryTabs"></div>
+    <input type="text" id="searchInput" placeholder="Cari nama model, kode FEFCO, atau peruntukan..." 
+      class="w-full md:w-80 px-4 py-2 rounded-xl border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-black text-sm" />
+  </div>
+
+  <!-- Models Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8" id="modelsGrid"></div>
+
+  <!-- Detail Modal -->
+  <div id="modalOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 md:p-8 max-h-[90vh] overflow-y-auto shadow-2xl relative" id="modalContent"></div>
+  </div>
+
+  <footer class="pt-8 border-t border-gray-300 text-center text-gray-500 text-sm">
+    Kotakio Full Local System &bull; REA Full Models Spec &bull; 100% Offline Capable
+  </footer>
+
+  <script>
+    const MODELS = [
+      {
+        id: "tuck-end-0215",
+        fefco: "FEFCO 0215",
+        name: "Reverse Tuck End Box",
+        cat: "Kosmetik & Skincare",
+        badge: "Terlaris UMKM",
+        thumb: "/assets/tuck-end-0215-Dn5yXkw4.webp",
+        desc: "Kotak lipat standar industri untuk botol serum skincare, parfum, obat herbal, dan kemasan ritel.",
+        dims: { length: 90, width: 65, height: 140, thickness: 0.4, board: "Ivory 300 gsm" },
+        boards: ["Art Carton 260", "Ivory 300", "Ivory 350", "Duplex 350", "Kraft 350"],
+        presets: [
+          { label: "Box Serum 30ml", p: 45, l: 45, t: 115 },
+          { label: "Box Parfum 100ml", p: 85, l: 55, t: 135 },
+          { label: "Box Teh Herbal / Suplemen", p: 110, l: 70, t: 150 }
+        ],
+        design: { base: "#3d5a4a (Sage)", brand: "Aura Botanica", sub: "Brightening Serum", finish: "Matte" }
+      },
+      {
+        id: "straight-tuck-end",
+        fefco: "ECMA A15.20",
+        name: "Straight Tuck End Box",
+        cat: "Herbal & Suplemen",
+        badge: "Standar Farmasi",
+        thumb: "/assets/tuck-end-0215-Dn5yXkw4.webp",
+        desc: "Kotak lipat dengan kedua tutup di sisi depan. Rapi untuk dipajang di rak dan mudah dibuka dari depan.",
+        dims: { length: 70, width: 45, height: 120, thickness: 0.4, board: "Ivory 300 gsm" },
+        boards: ["Art Carton 260", "Ivory 300", "Ivory 350", "Duplex 350", "Kraft 350"],
+        presets: [
+          { label: "Botol kapsul 60", p: 55, l: 55, t: 105 },
+          { label: "Sirup herbal 100ml", p: 60, l: 45, t: 140 },
+          { label: "Teh celup 25", p: 125, l: 70, t: 75 }
+        ],
+        design: { base: "#f1e8d6", brand: "Herba Lestari", sub: "Kapsul Temulawak", finish: "Matte" }
+      },
+      {
+        id: "autolock-bottom-box",
+        fefco: "CRASH-LOCK",
+        name: "Auto-Lock Bottom Box",
+        cat: "Botol & Toples",
+        badge: "Cepat Rakit",
+        thumb: "/assets/autolock-bottom-box-B_r0R8cm.webp",
+        desc: "Kotak lipat dengan alas yang mengunci sendiri saat dibuka. Kuat untuk botol kaca, toples, dan produk yang berat.",
+        dims: { length: 75, width: 75, height: 160, thickness: 0.5, board: "Duplex 350 gsm" },
+        boards: ["Ivory 350", "Duplex 350", "Kraft 350", "E-Flute"],
+        presets: [
+          { label: "Botol sirup 250 ml", p: 70, l: 70, t: 190 },
+          { label: "Toples sambal 200 g", p: 80, l: 80, t: 100 },
+          { label: "Botol minyak 500 ml", p: 75, l: 75, t: 240 }
+        ],
+        design: { base: "#123e5c", brand: "Sambal Juara", sub: "Sambal Bawang Pedas", finish: "Glossy" }
+      },
+      {
+        id: "mailer-box-0427",
+        fefco: "FEFCO 0427",
+        name: "E-Commerce Mailer Box",
+        cat: "Fashion & Hampers",
+        badge: "Favorit Brand",
+        thumb: "/assets/mailer-box-0427-BM5WtxCi.webp",
+        desc: "Kardus die-cut lipat tanpa lakban dengan kuping pengunci depan. Cocok untuk hijab, baju, sepatu, dan hampers.",
+        dims: { length: 220, width: 160, height: 75, thickness: 1.5, board: "E-Flute" },
+        boards: ["E-Flute", "B-Flute"],
+        presets: [
+          { label: "Box Hijab / Aksesoris", p: 180, l: 140, t: 50 },
+          { label: "Box Kaos / Streetwear", p: 250, l: 200, t: 70 },
+          { label: "Box Hampers Lebaran", p: 280, l: 220, t: 95 }
+        ],
+        design: { base: "#c49a6c (Kraft)", brand: "Kala Studio", sub: "Handcrafted Apparel", finish: "Kraft" }
+      },
+      {
+        id: "snack-box-lock",
+        fefco: "SNACK-BOX",
+        name: "Dus Snack & Nasi Kotak",
+        cat: "Katering & Kue",
+        badge: "Paling Dicari",
+        thumb: "/assets/snack-box-lock-BsTh7QYT.webp",
+        desc: "Dus makanan dengan tutup menyatu dan kunci lidah. Untuk snack box, nasi kotak, dan kue acara.",
+        dims: { length: 150, width: 150, height: 60, thickness: 0.5, board: "Duplex 350 gsm" },
+        boards: ["Ivory 300", "Duplex 350", "Kraft 350"],
+        presets: [
+          { label: "Snack box 10 × 10", p: 100, l: 100, t: 50 },
+          { label: "Snack box 15 × 15", p: 150, l: 150, t: 60 },
+          { label: "Nasi kotak 20 × 20", p: 200, l: 200, t: 75 }
+        ],
+        design: { base: "#f4ead5", brand: "Dapur Bu Ratna", sub: "Snack & Nasi Kotak", finish: "Matte" }
+      },
+      {
+        id: "lunch-box-takeaway",
+        fefco: "LUNCH-BOX",
+        name: "Lunch Box Take Away",
+        cat: "Kuliner & Katering",
+        badge: "Baru",
+        thumb: "/assets/snack-box-lock-BsTh7QYT.webp",
+        desc: "Kotak makan lipat dengan dinding miring dan sudut lipatan tertutup anti bocor untuk makanan berkuah & berminyak.",
+        dims: { length: 160, width: 110, height: 50, thickness: 0.4, board: "Foodpack 290 gsm" },
+        boards: ["Foodpack 290", "Ivory 300", "Kraft 350"],
+        presets: [
+          { label: "Lunch box S (snack, kue)", p: 130, l: 90, t: 45 },
+          { label: "Lunch box M (nasi + lauk)", p: 160, l: 110, t: 50 },
+          { label: "Lunch box L (porsi besar)", p: 190, l: 130, t: 55 }
+        ],
+        design: { base: "#c49a6c", brand: "Dapur Nusa", sub: "Nasi Bakar Cakalang", finish: "Kraft" }
+      },
+      {
+        id: "pizza-box",
+        fefco: "PIZZA-BOX",
+        name: "Pizza Box",
+        cat: "Pizza & Martabak",
+        badge: "Baru",
+        thumb: "/assets/mailer-box-0427-BM5WtxCi.webp",
+        desc: "Kardus pipih bertutup menyatu dengan ventilasi uap untuk pizza, martabak manis, dan pie susu.",
+        dims: { length: 270, width: 270, height: 40, thickness: 1.5, board: "E-Flute" },
+        boards: ["E-Flute", "B-Flute"],
+        presets: [
+          { label: "Pizza 8 inci", p: 220, l: 220, t: 40 },
+          { label: "Pizza 10 inci", p: 270, l: 270, t: 40 },
+          { label: "Pizza 12 inci", p: 320, l: 320, t: 45 }
+        ],
+        design: { base: "#c89b6e", brand: "Pizza Rumahan", sub: "Wood-fired Pizza", finish: "Kraft" }
+      },
+      {
+        id: "donut-box",
+        fefco: "DONUT-BOX",
+        name: "Box Donat & Kue",
+        cat: "Bakery & Kue",
+        badge: "Baru",
+        thumb: "/assets/donut-box-BLZ5XJre.webp",
+        desc: "Dus kue dengan tutup menyatu dan jendela mika tembus pandang untuk donat isi 6/12 dan kue basah.",
+        dims: { length: 260, width: 175, height: 55, thickness: 0.4, board: "Ivory 300 gsm" },
+        boards: ["Ivory 300", "Foodpack 290", "Duplex 350", "Kraft 350"],
+        presets: [
+          { label: "Donat isi 3", p: 260, l: 90, t: 55 },
+          { label: "Donat isi 6", p: 260, l: 175, t: 55 },
+          { label: "Donat isi 12", p: 350, l: 265, t: 55 }
+        ],
+        design: { base: "#f7d9df", brand: "Donat Mama", sub: "Donat Kentang Lembut", finish: "Glossy" }
+      },
+      {
+        id: "tray-sleeve-box",
+        fefco: "TRAY-SLEEVE",
+        name: "Tray & Sleeve",
+        cat: "Kue & Frozen Food",
+        badge: "Baru",
+        thumb: "/assets/sliding-drawer-box-B89dhtMv.webp",
+        desc: "Wadah tray terbuka dengan selongsong sleeve geser bercetak dalam satu lembar cetak.",
+        dims: { length: 180, width: 120, height: 45, thickness: 0.4, board: "Foodpack 290 gsm" },
+        boards: ["Foodpack 290", "Ivory 300", "Duplex 350", "Kraft 350"],
+        presets: [
+          { label: "Bolu / kue potong", p: 180, l: 120, t: 45 },
+          { label: "Dimsum / sushi isi 6", p: 200, l: 100, t: 45 },
+          { label: "Brownies 20 × 20", p: 200, l: 200, t: 50 }
+        ],
+        design: { base: "#2f5d3a", brand: "Bolu Ibu", sub: "Bolu Pandan Lapis", finish: "Matte" }
+      },
+      {
+        id: "standing-pouch-coffee",
+        fefco: "POUCH-3D",
+        name: "Standing Pouch Ziplock",
+        cat: "Kopi & Snack UMKM",
+        badge: "Primadona UMKM",
+        thumb: "/assets/standing-pouch-coffee-B5nzDVJy.webp",
+        desc: "Kemasan fleksibel berdiri dengan segel ziplock atas & dasar gusset untuk biji kopi dan keripik.",
+        dims: { length: 140, width: 65, height: 210, thickness: 0.15, board: "Kraft + PE" },
+        boards: ["Kraft + PE", "PET/PE Bening", "PET/ALU/PE Metalized"],
+        presets: [
+          { label: "Pouch Snack 150g", p: 120, l: 55, t: 185 },
+          { label: "Pouch Kopi 250g Standar", p: 140, l: 65, t: 210 },
+          { label: "Pouch Bubuk 500g Besar", p: 160, l: 80, t: 240 }
+        ],
+        design: { base: "#2b231f", brand: "Kopi Gunung", sub: "Arabika Gayo", finish: "Matte" }
+      },
+      {
+        id: "sticker-label",
+        fefco: "STIKER",
+        name: "Stiker & Label Kemasan",
+        cat: "Toples & Botol",
+        badge: "Baru",
+        thumb: "/assets/cylinder-can-330-BuCsgk3E.webp",
+        desc: "Stiker bulat, oval, atau kotak untuk ditempel di toples kue kering, botol, cup, dan thinwall.",
+        dims: { length: 60, width: 60, height: 0, thickness: 0.1, board: "Vinyl Putih" },
+        boards: ["Stiker Kertas", "Vinyl Putih", "BOPP Transparan"],
+        presets: [
+          { label: "Tutup toples Ø 60", p: 60, l: 60, t: 0 },
+          { label: "Segel logo Ø 35", p: 35, l: 35, t: 0 },
+          { label: "Label oval 80 × 50", p: 80, l: 50, t: 0 },
+          { label: "Label botol 90 × 60", p: 90, l: 60, t: 0 }
+        ],
+        design: { base: "#fbf6ec", brand: "Sambal Mbok Sri", sub: "Sambal Bawang", finish: "Glossy" }
+      },
+      {
+        id: "pillow-box",
+        fefco: "PILLOW-BOX",
+        name: "Pillow Box (Bantal)",
+        cat: "Suvenir & Perhiasan",
+        badge: "Bentuk Unik",
+        thumb: "/assets/pillow-box-L6tqCY2t.webp",
+        desc: "Kotak bantal dengan ujung melengkung tanpa lem untuk suvenir pernikahan dan perhiasan.",
+        dims: { length: 160, width: 100, height: 30, thickness: 0.3, board: "Art Carton 260" },
+        boards: ["Art Carton 260", "Ivory 300", "Kraft 350"],
+        presets: [
+          { label: "Suvenir pernikahan", p: 140, l: 90, t: 25 },
+          { label: "Perhiasan / gelang", p: 110, l: 70, t: 25 },
+          { label: "Kaos lipat", p: 260, l: 180, t: 50 }
+        ],
+        design: { base: "#e9dfd3", brand: "Sekar & Bayu", sub: "Terima kasih", finish: "Matte" }
+      },
+      {
+        id: "paper-bag-sos",
+        fefco: "BAG-SOS",
+        name: "Paper Bag SOS",
+        cat: "Butik & Kafe",
+        badge: "Ramah Lingkungan",
+        thumb: "/assets/paper-bag-sos-yUx29yx5.webp",
+        desc: "Tas belanja kertas dengan gusset samping dan dasar persegi yang dapat berdiri tegak mandiri.",
+        dims: { length: 250, width: 100, height: 300, thickness: 0.15, board: "Kertas Kraft 120" },
+        boards: ["Kertas Kraft 120", "Art Paper 150", "Ivory 230"],
+        presets: [
+          { label: "Tas kecil (perhiasan)", p: 180, l: 80, t: 220 },
+          { label: "Tas sedang (kue, kopi)", p: 250, l: 100, t: 300 },
+          { label: "Tas besar (pakaian)", p: 320, l: 120, t: 400 }
+        ],
+        design: { base: "#c49a6c", brand: "Toko Senja", sub: "Oleh-oleh Bandung", finish: "Kraft" }
+      },
+      {
+        id: "cylinder-can-330",
+        fefco: "CYL-360",
+        name: "Kaleng Silinder & Jar",
+        cat: "Minuman & Kosmetik",
+        badge: "3D Silinder",
+        thumb: "/assets/cylinder-can-330-BuCsgk3E.webp",
+        desc: "Kemasan tabung silinder 360 derajat dengan tutup metalik untuk minuman kaleng dan jar krim kosmetik.",
+        dims: { length: 75, width: 75, height: 135, thickness: 0.1, board: "Stiker Kertas" },
+        boards: ["Stiker Kertas", "BOPP Transparan"],
+        presets: [
+          { label: "Jar Skincare 100g", p: 75, l: 75, t: 68 },
+          { label: "Kaleng Minuman 330ml", p: 66, l: 66, t: 122 },
+          { label: "Tabung Cookies Premium", p: 95, l: 95, t: 165 }
+        ],
+        design: { base: "#b3372c", brand: "Freshcan", sub: "Sparkling Soda", finish: "Glossy" }
+      },
+      {
+        id: "rsc-shipping-0201",
+        fefco: "FEFCO 0201",
+        name: "Regular Slotted Container",
+        cat: "Kargo & Logistik",
+        badge: "Standar Pabrik",
+        thumb: "/assets/mailer-box-0427-BM5WtxCi.webp",
+        desc: "Kardus distribusi kargo standar dengan 4 flap penutup atas dan bawah yang bertemu tepat di tengah.",
+        dims: { length: 240, width: 180, height: 160, thickness: 3.0, board: "B-Flute" },
+        boards: ["E-Flute", "B-Flute", "C-Flute", "BC-Flute"],
+        presets: [
+          { label: "Kardus Olshop Kecil", p: 200, l: 150, t: 120 },
+          { label: "Kardus Distribusi Medium", p: 300, l: 220, t: 200 },
+          { label: "Master Box Grosir", p: 360, l: 260, t: 240 }
+        ],
+        design: { base: "#c89b6e", brand: "Nusantara Express", sub: "Barang pecah belah", finish: "Kraft" }
+      },
+      {
+        id: "food-gable-box",
+        fefco: "GABLE-BOX",
+        name: "Food Box & Bakery Carrier",
+        cat: "Kuliner F&B",
+        badge: "Kuliner Hits",
+        thumb: "/assets/food-gable-box-Dr01oCwJ.webp",
+        desc: "Kotak jinjing beratap dengan pegangan untuk roti, donat, kue, dan oleh-oleh tanpa kantong plastik.",
+        dims: { length: 200, width: 140, height: 90, thickness: 0.5, board: "Kraft 350 gsm" },
+        boards: ["Duplex 350", "Kraft 350", "E-Flute"],
+        presets: [
+          { label: "Donat isi 6", p: 220, l: 150, t: 70 },
+          { label: "Roti isi 4", p: 200, l: 140, t: 90 },
+          { label: "Kue tart 18 cm", p: 210, l: 210, t: 110 }
+        ],
+        design: { base: "#a94f24", brand: "Roti Senja", sub: "Artisan Bakery", finish: "Glossy" }
+      },
+      {
+        id: "sliding-drawer-box",
+        fefco: "SLIDE-BOX",
+        name: "Sliding Drawer Box",
+        cat: "Cokelat & Hampers",
+        badge: "Premium",
+        thumb: "/assets/sliding-drawer-box-B89dhtMv.webp",
+        desc: "Kotak laci dengan selongsong sleeve geser untuk cokelat praline, jam tangan, dan hampers eksklusif.",
+        dims: { length: 160, width: 100, height: 35, thickness: 0.45, board: "Ivory 350 gsm" },
+        boards: ["Ivory 300", "Ivory 350", "Duplex 350", "Kraft 350"],
+        presets: [
+          { label: "Cokelat batang isi 4", p: 160, l: 100, t: 30 },
+          { label: "Lipstik / parfum mini", p: 120, l: 60, t: 30 },
+          { label: "Hampers aksesoris", p: 220, l: 160, t: 60 }
+        ],
+        design: { base: "#5b2a3a", brand: "Kakao Nusantara", sub: "Dark Chocolate 70%", finish: "Matte" }
+      },
+      {
+        id: "luxury-gift-box",
+        fefco: "FEFCO 0320",
+        name: "Luxury Rigid Gift Box",
+        cat: "Kopi & Gift Box",
+        badge: "PRO",
+        thumb: "/assets/luxury-gift-box-BcNoObEz.webp",
+        desc: "Kotak tutup dan alas terpisah dari greyboard tebal dilapisi kertas seni untuk drip bag coffee dan gift set korporat.",
+        dims: { length: 130, width: 95, height: 170, thickness: 2.0, board: "Greyboard 2 mm" },
+        boards: ["Greyboard 2.0mm", "Greyboard 2.5mm"],
+        presets: [
+          { label: "Box Drip Coffee 10 Sachet", p: 125, l: 90, t: 155 },
+          { label: "Box Gift Set Jam / Dompet", p: 140, l: 120, t: 85 },
+          { label: "Box Reed Diffuser Luxury", p: 100, l: 100, t: 210 }
+        ],
+        design: { base: "#1f2438", brand: "Gayo Roastery", sub: "Single Origin Arabica", finish: "Foil" }
+      }
+    ];
+
+    let currentCategory = "Semua";
+
+    function setupTabs() {
+      const categories = ["Semua", ...new Set(MODELS.map(m => m.cat))];
+      document.getElementById("categoryTabs").innerHTML = categories.map(c => `
+        <button onclick="setCategory('${c}')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition ${currentCategory === c ? 'bg-black text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-100'}">
+          ${c}
+        </button>
+      `).join("");
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      setupTabs();
+      render();
+    }
+
+    function render() {
+      const q = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = MODELS.filter(m => {
+        const matchCat = currentCategory === "Semua" || m.cat === currentCategory;
+        const matchQ = m.name.toLowerCase().includes(q) || m.fefco.toLowerCase().includes(q) || m.desc.toLowerCase().includes(q);
+        return matchCat && matchQ;
+      });
+
+      document.getElementById("modelsGrid").innerHTML = filtered.map(m => `
+        <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="h-48 bg-gray-100 flex items-center justify-center p-4 overflow-hidden relative">
+              <img src="${m.thumb}" alt="${m.name}" class="max-h-full max-w-full object-contain hover:scale-105 transition duration-300" />
+              <span class="absolute top-3 left-3 text-xs font-mono font-bold bg-white/90 backdrop-blur px-2.5 py-1 rounded shadow-sm text-blue-600">${m.fefco}</span>
+              <span class="absolute top-3 right-3 badge bg-black/80 text-white backdrop-blur">${m.badge}</span>
+            </div>
+            <div class="p-5">
+              <h3 class="text-lg font-bold text-gray-900">${m.name}</h3>
+              <p class="text-xs text-gray-500 mb-2">${m.cat}</p>
+              <p class="text-sm text-gray-600 line-clamp-2 mb-4">${m.desc}</p>
+              <div class="text-xs text-gray-500 bg-gray-50 p-2.5 rounded-lg space-y-1">
+                <div><strong>Default:</strong> ${m.dims.length} × ${m.dims.width} × ${m.dims.height} mm</div>
+                <div><strong>Bahan:</strong> ${m.dims.board} (${m.dims.thickness} mm)</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex gap-2">
+            <button onclick="openModal('${m.id}')" class="flex-1 py-2 text-xs font-semibold bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition">Detail Spek CAD</button>
+            <a href="/studio" class="py-2 px-3 text-xs font-semibold bg-black text-white rounded-lg hover:bg-gray-800 transition">Buka di Studio &rarr;</a>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function openModal(id) {
+      const m = MODELS.find(x => x.id === id);
+      if (!m) return;
+      document.getElementById("modalContent").innerHTML = `
+        <button onclick="closeModal()" class="absolute top-5 right-5 text-gray-400 hover:text-black text-xl font-bold">&times;</button>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="font-mono text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">${m.fefco}</span>
+          <span class="badge bg-gray-100 text-gray-800">${m.badge}</span>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">${m.name}</h2>
+        <p class="text-sm text-gray-600 mb-6">${m.desc}</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+            <h4 class="font-bold text-xs uppercase text-gray-500 mb-2">Preset Ukuran Industri</h4>
+            <ul class="text-xs space-y-1.5 text-gray-700">
+              ${m.presets.map(p => `<li>&bull; <strong>${p.label}:</strong> ${p.p} × ${p.l} × ${p.t} mm</li>`).join("")}
+            </ul>
+          </div>
+          <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+            <h4 class="font-bold text-xs uppercase text-gray-500 mb-2">Bahan &amp; Caliper Board</h4>
+            <ul class="text-xs space-y-1 text-gray-700">
+              ${m.boards.map(b => `<li>&bull; ${b}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+
+        <div class="p-4 bg-blue-50/50 rounded-xl border border-blue-100 mb-6 text-xs text-gray-700 space-y-1">
+          <div class="font-bold text-blue-900 mb-1">Desain Default Template:</div>
+          <div><strong>Brand:</strong> ${m.design.brand} — ${m.design.sub}</div>
+          <div><strong>Warna:</strong> ${m.design.base} &bull; <strong>Finish:</strong> ${m.design.finish}</div>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <button onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-xs font-semibold hover:bg-gray-50">Tutup</button>
+          <a href="/studio" class="px-4 py-2 bg-black text-white rounded-lg text-xs font-semibold hover:bg-gray-800">Edit Model di Studio &rarr;</a>
+        </div>
+      `;
+      document.getElementById("modalOverlay").classList.remove("hidden");
+    }
+
+    function closeModal() {
+      document.getElementById("modalOverlay").classList.add("hidden");
+    }
+
+    document.getElementById("modalOverlay").addEventListener("click", e => {
+      if (e.target === document.getElementById("modalOverlay")) closeModal();
+    });
+
+    document.getElementById("searchInput").addEventListener("input", render);
+    setupTabs();
+    render();
+  </script>
+</body>
+</html>

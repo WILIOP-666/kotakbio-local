@@ -1,0 +1,5 @@
+# Netscape HTTP Cookie File
+# https://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file! Do not edit.
+
+kotakio.biz.id	FALSE	/	FALSE	1808101970	g_state	{"i_l":0,"i_ll":1792549970880,"i_b":"7s3nCZ0J0qz9ju3JWmeSP+oq0iWKDtV5Lu9NfqOco0E","i_e":{"enable_itp_optimization":24},"i_et":1792549970880}

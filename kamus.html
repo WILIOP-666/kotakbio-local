@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kamus &amp; Spesifikasi Lengkap Kotakio (Full REA)</title>
+  <link rel="stylesheet" href="/assets/index-CMxk3kTM.css" />
+  <style>
+    :root {
+      --color-paper: #f3f3f1;
+      --color-ink: #191919;
+      --color-cut: #e11d48;
+      --color-crease: #2563eb;
+    }
+    body {
+      background-color: var(--color-paper);
+      color: var(--color-ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="p-6 md:p-12 max-w-6xl mx-auto">
+  <!-- Header -->
+  <header class="flex flex-col md:flex-row justify-between items-start md:items-center pb-8 border-b border-gray-300 gap-4">
+    <div>
+      <div class="flex items-center gap-3">
+        <h1 class="text-3xl font-extrabold tracking-tight">Kamus &amp; Spesifikasi Kotakio</h1>
+        <span class="badge bg-black text-white">Full REA Local</span>
+      </div>
+      <p class="text-gray-600 mt-1">Ekstraksi lengkap 18 Model FEFCO, Kamus Material Caliper, Rumus CAD, &amp; Glosarium Percetakan</p>
+    </div>
+    <div class="flex gap-2">
+      <a href="/studio" class="px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition">Buka Studio 3D &rarr;</a>
+      <a href="/admin" class="px-4 py-2 bg-white border border-gray-300 rounded-lg font-medium hover:bg-gray-100 transition">Dashboard Admin</a>
+    </div>
+  </header>
+
+  <!-- Search Filter -->
+  <div class="my-6">
+    <input type="text" id="searchInput" placeholder="Cari model kemasan, material, istilah (contoh: FEFCO, ivory, bleed, ril)..." 
+      class="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-black" />
+  </div>
+
+  <!-- Section 1: 18 Model Kemasan -->
+  <section class="my-10">
+    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+      <span>📦</span> 18 Model Kemasan Standar FEFCO / ECMA
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="modelsGrid"></div>
+  </section>
+
+  <!-- Section 2: Material & Board Caliper -->
+  <section class="my-10">
+    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+      <span>📄</span> 21 Material Kertas, Karton &amp; Ketebalan Caliper (xh)
+    </h2>
+    <div class="overflow-x-auto bg-white rounded-xl shadow border border-gray-200">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-gray-100 text-gray-700 uppercase font-semibold text-xs border-b">
+          <tr>
+            <th class="p-3">Kunci ID</th>
+            <th class="p-3">Nama Material &amp; Gramatur</th>
+            <th class="p-3">Ketebalan (Caliper)</th>
+            <th class="p-3">Kategori Penggunaan</th>
+          </tr>
+        </thead>
+        <tbody id="materialsBody" class="divide-y divide-gray-200"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 3: Glosarium Kemasan -->
+  <section class="my-10">
+    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+      <span>📚</span> Glosarium &amp; Istilah Industri Percetakan Kemasan
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="glossaryGrid"></div>
+  </section>
+
+  <footer class="pt-8 border-t border-gray-300 text-center text-gray-500 text-sm">
+    Kotakio Full Local System &bull; Reverse Engineer Anything (REA) Standard &bull; 100% Offline Capable
+  </footer>
+
+  <script>
+    const MODELS = [
+      { id: "tuck-end-0215", fefco: "FEFCO 0215", name: "Reverse Tuck End Box", cat: "Kosmetik & Skincare", badge: "Terlaris UMKM", desc: "Kotak lipat standar untuk botol serum, skincare, parfum, dan herbal. Tutup atas selip ke belakang, tutup bawah ke depan.", dims: "90 x 65 x 140 mm", board: "Ivory 300 gsm (0.4mm)" },
+      { id: "straight-tuck-end", fefco: "ECMA A15.20", name: "Straight Tuck End Box", cat: "Herbal & Suplemen", badge: "Standar Farmasi", desc: "Kedua lidah melipat ke arah yang sama (belakang). Rapi untuk tampak depan farmasi dan obat kapsul.", dims: "80 x 50 x 130 mm", board: "Ivory 300 gsm (0.4mm)" },
+      { id: "autolock-bottom-box", fefco: "CRASH-LOCK", name: "Auto-Lock Bottom Box", cat: "Botol & Toples", badge: "Cepat Rakit", desc: "Bagian bawah otomatis mengunci saat ditekan mengembang. Mampu menahan beban berat botol sirup & toples madu.", dims: "100 x 100 x 160 mm", board: "Duplex 350 gsm (0.5mm)" },
+      { id: "mailer-box-0427", fefco: "FEFCO 0427", name: "E-Commerce Mailer Box", cat: "Fashion & Hampers", badge: "Favorit Olshop", desc: "Kardus bergelombang model flip-top dengan dinding samping ganda anti remuk untuk pengiriman paket.", dims: "220 x 160 x 70 mm", board: "E-Flute (1.5mm)" },
+      { id: "snack-box-lock", fefco: "SNACK-BOX", name: "Dus Snack & Nasi Kotak", cat: "Katering & Kue", badge: "Tanpa Lem", desc: "Dus makanan dengan kancing slip interlocking tanpa lem untuk snack rapat, bakery, dan kue basah.", dims: "160 x 120 x 75 mm", board: "Duplex 350 gsm (0.5mm)" },
+      { id: "lunch-box-takeaway", fefco: "LUNCH-BOX", name: "Lunch Box Take Away", cat: "Kuliner & Katering", badge: "Anti Bocor", desc: "Sudut tertutup tanpa celah, tahan kuah dan rembesan minyak untuk ayam geprek, nasi goreng, mie.", dims: "180 x 110 x 50 mm", board: "Foodpack 290 gsm (0.4mm)" },
+      { id: "pizza-box", fefco: "PIZZA-BOX", name: "Pizza Box", cat: "Pizza & Martabak", badge: "Tahan Panas", desc: "Kotak kardus bergelombang ceper dengan ventilasi uap untuk menjaga kerenyahan pizza dan martabak.", dims: "240 x 240 x 45 mm", board: "E-Flute (1.5mm)" },
+      { id: "donut-box", fefco: "DONUT-BOX", name: "Box Donat & Kue", cat: "Bakery & Kue", badge: "Tutup Lebar", desc: "Kotak bertutup engsel bukaan lebar untuk memudahkan penataan donat isi 6 atau 12 dan chiffon cake.", dims: "270 x 185 x 55 mm", board: "Ivory 300 gsm (0.4mm)" },
+      { id: "tray-sleeve-box", fefco: "TRAY-SLEEVE", name: "Tray & Sleeve", cat: "Kue & Frozen Food", badge: "Kemasan Geser", desc: "Kemasan dua bagian: wadah dalam (tray) dan selongsong luar (sleeve) untuk hadiah dan pastry.", dims: "150 x 100 x 45 mm", board: "Foodpack 290 gsm (0.4mm)" },
+      { id: "standing-pouch-coffee", fefco: "POUCH-3D", name: "Standing Pouch Ziplock", cat: "Kopi & Snack UMKM", badge: "Kemasan Fleksibel", desc: "Kantong berdiri dengan lipatan bawah (bottom gusset) dan ziplock kedap udara untuk kopi dan keripik.", dims: "140 x 70 x 220 mm", board: "Kraft + PE (0.15mm)" },
+      { id: "sticker-label", fefco: "STIKER", name: "Stiker & Label Kemasan", cat: "Toples & Botol", badge: "Siap Cetak", desc: "Layout pola stiker die-cut siap cetak untuk botol, toples kue, cup minuman, dan segel kemasan.", dims: "80 x 50 x 1 mm", board: "Vinyl Putih (0.1mm)" },
+      { id: "pillow-box", fefco: "PILLOW-BOX", name: "Pillow Box (Bantal)", cat: "Suvenir & Perhiasan", badge: "Bentuk Unik", desc: "Kotak lengkung bentuk bantal dengan tutup elips di kedua ujung untuk syal, sabun organik, dan suvenir.", dims: "130 x 90 x 35 mm", board: "Art Carton 260 (0.3mm)" },
+      { id: "paper-bag-sos", fefco: "BAG-SOS", name: "Paper Bag SOS", cat: "Butik & Kafe", badge: "Ramah Lingkungan", desc: "Kantong kertas dengan dasar persegi dapat berdiri tegak, dengan lipatan samping accordion.", dims: "150 x 90 x 240 mm", board: "Kraft 120 gsm (0.15mm)" },
+      { id: "cylinder-can-330", fefco: "CYL-360", name: "Kaleng Silinder & Jar", cat: "Minuman & Kosmetik", badge: "Silinder 360°", desc: "Visualisasi label melingkar 360 derajat untuk kaleng soda 330ml dan jar kosmetik.", dims: "212 x 66 x 120 mm", board: "Stiker Kertas (0.1mm)" },
+      { id: "rsc-shipping-0201", fefco: "FEFCO 0201", name: "Regular Slotted Container", cat: "Kargo & Logistik", badge: "Master Box", desc: "Kardus bergelombang standar ekspedisi global dengan 4 flap penutup yang bertemu di tengah untuk dilakban.", dims: "300 x 200 x 200 mm", board: "B-Flute (3.0mm)" },
+      { id: "food-gable-box", fefco: "GABLE-BOX", name: "Food Box & Bakery Carrier", cat: "Kuliner F&B", badge: "Tenteng Jinjing", desc: "Kotak beratap segitiga dengan pegangan jinjing terintegrasi untuk bolu gulung dan hampers makanan.", dims: "200 x 120 x 150 mm", board: "Kraft 350 gsm (0.5mm)" },
+      { id: "sliding-drawer-box", fefco: "SLIDE-BOX", name: "Sliding Drawer Box", cat: "Cokelat & Hampers", badge: "Laci Geser", desc: "Kotak laci geser eksklusif (drawer & sleeve) untuk unboxing cokelat praline, jam tangan, dan suvenir.", dims: "160 x 90 x 40 mm", board: "Ivory 350 gsm (0.45mm)" },
+      { id: "luxury-gift-box", fefco: "FEFCO 0320", name: "Luxury Rigid Gift Box", cat: "Kopi & Gift Box", badge: "Hardbox Mewah", desc: "Kotak tutup dan alas terpisah berbahan greyboard tebal dilapisi kertas seni untuk gift set korporat.", dims: "130 x 95 x 170 mm", board: "Greyboard 2mm (2.0mm)" }
+    ];
+
+    const MATERIALS = [
+      { key: "art-carton-260", name: "Art Carton 260 gsm", cal: "0.30 mm", use: "Kedua sisi putih licin; cetak offset warna tajam" },
+      { key: "ivory-230", name: "Ivory 230 gsm", cal: "0.30 mm", use: "Depan licin putih, belakang kasar; box obat ringan" },
+      { key: "ivory-300", name: "Ivory 300 gsm", cal: "0.40 mm", use: "Standar terpopuler skincare, serum, kosmetik, parfum" },
+      { key: "ivory-350", name: "Ivory 350 gsm", cal: "0.45 mm", use: "Ekstra kaku untuk botol kaca dan produk premium" },
+      { key: "duplex-350", name: "Duplex 350 gsm", cal: "0.50 mm", use: "Depan putih, belakang abu-abu; dus snack & katering" },
+      { key: "kraft-350", name: "Kraft Liner 350 gsm", cal: "0.50 mm", use: "Cokelat alami, kuat, ramah lingkungan" },
+      { key: "foodpack-290", name: "Foodpack 290 gsm", cal: "0.40 mm", use: "Food grade sertifikasi aman kontak langsung makanan" },
+      { key: "kraft-paper-120", name: "Kertas Kraft 120 gsm", cal: "0.15 mm", use: "Liat dan fleksibel untuk paper bag belanja" },
+      { key: "art-paper-150", name: "Art Paper 150 gsm", cal: "0.15 mm", use: "Kertas pembungkus lapisan luar rigid hardbox" },
+      { key: "e-flute", name: "Karton Gelombang E-Flute", cal: "1.50 mm", use: "Gelombang mikro untuk mailer box paket e-commerce" },
+      { key: "b-flute", name: "Karton Gelombang B-Flute", cal: "3.00 mm", use: "Standar kardus pengiriman ekspedisi & pizza box" },
+      { key: "c-flute", name: "Karton Gelombang C-Flute", cal: "4.00 mm", use: "Peredam benturan tinggi untuk produk berat" },
+      { key: "bc-flute", name: "Double Wall BC-Flute", cal: "7.00 mm", use: "Kardus 5-ply ganda untuk ekspor & barang pecah belah" },
+      { key: "greyboard-2", name: "Greyboard 2.0 mm", cal: "2.00 mm", use: "Papan padat kaku untuk hardbox kado mewah" },
+      { key: "greyboard-25", name: "Greyboard 2.5 mm", cal: "2.50 mm", use: "Hardbox ekstra tebal untuk jam & perhiasan" },
+      { key: "kraft-pe", name: "Kraft + Laminasi PE", cal: "0.15 mm", use: "Kedap udara & cairan untuk standing pouch kopi" },
+      { key: "pet-pe", name: "PET / PE Bening", cal: "0.10 mm", use: "Plastik transparan food grade untuk snack" },
+      { key: "pet-alu-pe", name: "PET / ALU / PE Metalized", cal: "0.12 mm", use: "Barrier 100% dari oksigen dan cahaya untuk kopi bubuk" },
+      { key: "label-paper", name: "Stiker Kertas Chromo", cal: "0.10 mm", use: "Label toples dan botol kering ekonomis" },
+      { key: "label-vinyl", name: "Stiker Vinyl Putih", cal: "0.10 mm", use: "Tahan air dan anti sobek untuk botol sampo & frozen" },
+      { key: "label-bopp", name: "Stiker BOPP Transparan", cal: "0.08 mm", use: "Plastik ultra bening efek tanpa stiker (no-label look)" }
+    ];
+
+    const GLOSSARY = [
+      { term: "Dieline (Pola Pond)", def: "Gambar teknik vektor 2D yang menunjukkan garis potong (cut), garis lipat (crease), dan margin lem kemasan." },
+      { term: "Pisau Pond (Die-Cut Rule)", def: "Bilah baja tajam setinggi 23.8 mm yang ditanam pada papan kayu untuk memotong lembaran kertas sesuai pola." },
+      { term: "Garis Lipat / Ril (Creasing Rule)", def: "Bilah baja berujung tumpul yang menekan alur pada kertas agar kertas dapat ditekuk tanpa pecah serat." },
+      { term: "Bleed (Area Lebih Tinta)", def: "Area warna/grafis yang dilebihkan 3 mm keluar dari garis potong pisau untuk mencegah tepi putih saat pergeseran potong." },
+      { term: "Safe Margin (Batas Aman)", def: "Jarak minimal 3 mm ke dalam dari garis potong/lipat agar teks atau logo tidak terpotong pisau pond." },
+      { term: "Gramatur (GSM)", def: "Grams per Square Meter — satuan berat jenis kertas. Semakin besar angkanya, semakin tebal dan kaku kertasnya." },
+      { term: "Caliper (Ketebalan Kertas)", def: "Ketebalan aktual fisik kertas dalam satuan milimeter (mm) yang dihitung dalam formula kompensasi sudut CAD." },
+      { term: "Arah Serat (Grain Direction)", def: "Arah jajaran serat selulosa kertas. Garis lipatan utama harus sejajar serat agar lekukan tidak retak." },
+      { term: "Lidah Lem (Glue Flap)", def: "Sayap sempit berukuran 12–20 mm yang dilem untuk menyatukan badan kotak menjadi bentuk tabung lipat." },
+      { term: "Sayap Debu (Dust Flap)", def: "Flap samping di bawah tutup utama yang berfungsi menahan debu dan menjaga kekakuan siku kotak 90 derajat." },
+      { term: "Euroslot (Euro Hole)", def: "Lubang gantungan standar rak toko ritel berbentuk 32 x 9 x 6 mm untuk cantolan rak display toko." },
+      { term: "Laminasi Doff (Matte)", def: "Lapisan film plastik tipis yang menyerap pantulan cahaya, memberikan tekstur lembut dan mewah." },
+      { term: "Laminasi Glossy", def: "Lapisan film plastik mengkilap yang memantulkan cahaya dan tahan percikan air." },
+      { term: "Hot Stamping Foil", def: "Teknik cetak transfer foil logam panas (emas, perak, tembaga) menggunakan klise tembaga/timah bertekanan." },
+      { term: "Spot UV", def: "Pelapisan cairan pernis mengkilap yang dikeringkan dengan sinar ultraviolet khusus pada area teks/logo terpilih." },
+      { term: "FEFCO Code", def: "Standar kodefikasi desain kemasan karton gelombang resmi dari federasi produsen karton Eropa (FEFCO)." }
+    ];
+
+    function render() {
+      const q = document.getElementById("searchInput").value.toLowerCase();
+
+      // Render Models
+      const filteredModels = MODELS.filter(m => m.name.toLowerCase().includes(q) || m.fefco.toLowerCase().includes(q) || m.desc.toLowerCase().includes(q) || m.cat.toLowerCase().includes(q));
+      document.getElementById("modelsGrid").innerHTML = filteredModels.map(m => `
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">${m.fefco}</span>
+              <span class="badge bg-gray-100 text-gray-800">${m.badge}</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900">${m.name}</h3>
+            <p class="text-xs text-gray-500 mb-3">${m.cat}</p>
+            <p class="text-sm text-gray-600 mb-4">${m.desc}</p>
+          </div>
+          <div class="pt-3 border-t border-gray-100 text-xs text-gray-500 space-y-1">
+            <div><strong>Dimensi Default:</strong> ${m.dims}</div>
+            <div><strong>Bahan Standar:</strong> ${m.board}</div>
+          </div>
+        </div>
+      `).join("");
+
+      // Render Materials
+      const filteredMat = MATERIALS.filter(m => m.name.toLowerCase().includes(q) || m.key.toLowerCase().includes(q) || m.use.toLowerCase().includes(q));
+      document.getElementById("materialsBody").innerHTML = filteredMat.map(m => `
+        <tr class="hover:bg-gray-50 transition">
+          <td class="p-3 font-mono text-xs text-gray-500">${m.key}</td>
+          <td class="p-3 font-semibold text-gray-900">${m.name}</td>
+          <td class="p-3 font-mono font-bold text-indigo-600">${m.cal}</td>
+          <td class="p-3 text-gray-600">${m.use}</td>
+        </tr>
+      `).join("");
+
+      // Render Glossary
+      const filteredGlossary = GLOSSARY.filter(g => g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q));
+      document.getElementById("glossaryGrid").innerHTML = filteredGlossary.map(g => `
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+          <h4 class="font-bold text-gray-900 mb-1 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+            ${g.term}
+          </h4>
+          <p class="text-sm text-gray-600">${g.def}</p>
+        </div>
+      `).join("");
+    }
+
+    document.getElementById("searchInput").addEventListener("input", render);
+    render();
+  </script>
+</body>
+</html>

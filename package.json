@@ -1,0 +1,22 @@
+{
+  "name": "kotakbio",
+  "version": "1.0.0",
+  "description": "Kotakio Packaging Studio & 3D Dieline CAD Generator (Full Pro Offline Clone)",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "sync": "node sync-assets.js"
+  },
+  "keywords": [
+    "kotakio",
+    "dieline",
+    "packaging",
+    "threejs",
+    "vue",
+    "cad",
+    "fefco"
+  ],
+  "author": "Kotakio Engineering",
+  "license": "MIT"
+}
